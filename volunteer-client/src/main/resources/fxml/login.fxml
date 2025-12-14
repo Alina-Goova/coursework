@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           style="-fx-padding: 20;">
+
+    <VBox spacing="20" alignment="CENTER" maxWidth="450">
+        
+        <Label text="Волонтерская система" styleClass="title-1"/>
+
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="floating">
+            <Tab text="Вход">
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <Label text="Добро пожаловать" styleClass="title-3"/>
+                    
+                    <VBox spacing="5">
+                        <Label text="Email" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="loginEmailField" promptText="name@example.com"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Пароль" style="-fx-font-weight: bold;"/>
+                        <PasswordField fx:id="loginPasswordField" promptText="••••••••"/>
+                    </VBox>
+
+                    <Button fx:id="loginButton" text="Войти" maxWidth="Infinity"
+                            styleClass="accent" onAction="#handleLogin"/>
+
+                    <Label fx:id="loginMessage" styleClass="danger" wrapText="true"/>
+                </VBox>
+            </Tab>
+
+            <Tab text="Регистрация">
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <Label text="Создание аккаунта" styleClass="title-3"/>
+
+                    <VBox spacing="5">
+                        <Label text="Email" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="registerEmailField" promptText="name@example.com"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Пароль" style="-fx-font-weight: bold;"/>
+                        <PasswordField fx:id="registerPasswordField" promptText="Минимум 6 символов"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Имя" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="registerNameField" promptText="Ваше полное имя"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Роль" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="registerRoleComboBox" promptText="Выберите роль" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <Button fx:id="registerButton" text="Зарегистрироваться" maxWidth="Infinity"
+                            styleClass="success" onAction="#handleRegister"/>
+
+                    <Label fx:id="registerMessage" styleClass="danger" wrapText="true"/>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </VBox>
+</StackPane>

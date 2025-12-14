@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.volunteerclient.controller.MainController"
+      spacing="0"
+      prefHeight="700" prefWidth="1000">
+
+    <MenuBar>
+        <Menu text="Файл">
+            <MenuItem text="Выход" onAction="#exitApplication"/>
+        </Menu>
+        <Menu text="Справка">
+            <MenuItem text="Об авторе" onAction="#showAbout"/>
+        </Menu>
+    </MenuBar>
+
+    <!-- Header / Top Bar -->
+    <HBox spacing="20" styleClass="header-bar" alignment="CENTER_LEFT">
+        <Label fx:id="welcomeLabel" styleClass="title-3"/>
+        <Region HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <TabPane fx:id="mainTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+
+        <!-- Вкладка Мероприятия -->
+        <Tab text="Мероприятия">
+            <VBox spacing="15" style="-fx-padding: 20;">
+                
+                <!-- Statistics Bar -->
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Label text="Статистика:" style="-fx-font-weight: bold; -fx-text-fill: -color-fg-muted;"/>
+                    <Label text="Всего: 0" fx:id="statTotalLabel" styleClass="title-4"/>
+                    <Label text="Активно: 0" fx:id="statActiveLabel" styleClass="title-4, success"/>
+                    <Label text="Планируется: 0" fx:id="statPlannedLabel" styleClass="title-4, accent"/>
+                    <Label text="Завершено: 0" fx:id="statCompletedLabel" styleClass="title-4"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- Filters & Toolbar -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="searchField" promptText="Поиск по названию..." HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="filterStatusBox" promptText="Статус" prefWidth="130"/>
+                    <ComboBox fx:id="filterCategoryBox" promptText="Категория" prefWidth="130"/>
+                    <DatePicker fx:id="filterDatePicker" promptText="Дата" prefWidth="130"/>
+                    
+                    <Button fx:id="searchButton" text="Поиск" onAction="#searchEvents" styleClass="accent"/>
+                    <Button text="Сброс" onAction="#clearFilters"/>
+                    <Button fx:id="refreshEventsButton" text="Обновить" onAction="#loadEvents"/>
+                </HBox>
+
+                <!-- Data Table -->
+                <TableView fx:id="eventsTable" VBox.vgrow="ALWAYS" styleClass="bordered, striped">
+                    <columns>
+                        <TableColumn fx:id="eventIdColumn" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="eventTitleColumn" text="Название" prefWidth="250"/>
+                        <TableColumn fx:id="eventStatusColumn" text="Статус" prefWidth="100"/>
+                        <TableColumn fx:id="eventCategoryColumn" text="Категория" prefWidth="120"/>
+                        <TableColumn fx:id="eventStartDateColumn" text="Начало" prefWidth="140"/>
+                        <TableColumn fx:id="eventLocationColumn" text="Место" prefWidth="150"/>
+                        <TableColumn fx:id="eventCapacityColumn" text="Места" prefWidth="80"/>
+                        <TableColumn fx:id="eventOrganizerColumn" text="Организатор" prefWidth="150"/>
+                        <TableColumn fx:id="eventEndDateColumn" text="Окончание" prefWidth="140"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <!-- Вкладка Администрирование -->
+        <Tab fx:id="adminTab" text="Администрирование">
+            <TabPane side="LEFT" styleClass="classic">
+                <Tab text="Управление Мероприятиями">
+                    <VBox fx:id="adminPanel" spacing="20" style="-fx-padding: 30;">
+                        <Label text="Создать новое мероприятие" styleClass="title-2"/>
+                        <Label text="Заполните форму ниже, чтобы добавить новое событие в систему." style="-fx-text-fill: -color-fg-muted;"/>
+
+                        <GridPane hgap="20" vgap="15" maxWidth="800">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="150" halignment="RIGHT"/>
+                                <ColumnConstraints hgrow="ALWAYS"/>
+                            </columnConstraints>
+
+                            <Label text="Название" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="eventTitleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Место проведения" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="eventLocationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Описание" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;" GridPane.valignment="TOP"/>
+                            <TextArea fx:id="eventDescriptionField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefRowCount="4" wrapText="true"/>
+
+                            <Label text="Даты" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                            <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                <DatePicker fx:id="eventStartDatePicker" promptText="Начало"/>
+                                <Label text="—"/>
+                                <DatePicker fx:id="eventEndDatePicker" promptText="Окончание"/>
+                            </HBox>
+
+                            <Label text="Участники" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="eventMaxParticipantsField" promptText="0 для неограниченного" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="200"/>
+                        </GridPane>
+                        
+                        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 170;">
+                             <Button fx:id="createEventButton" text="Создать мероприятие"
+                                onAction="#createEvent"
+                                styleClass="success" prefHeight="40" prefWidth="200"/>
+                        </HBox>
+                    </VBox>
+                </Tab>
+                <Tab text="Пользователи">
+                    <fx:include fx:id="adminUsers" source="/fxml/admin_users.fxml"/>
+                </Tab>
+                <Tab text="История Регистраций">
+                    <fx:include fx:id="adminRegistrations" source="/fxml/admin_registrations.fxml"/>
+                </Tab>
+            </TabPane>
+        </Tab>
+
+        <!-- Вкладка Профиль -->
+        <Tab text="Мой профиль" onSelectionChanged="#loadUserProfile">
+            <HBox spacing="0">
+                <!-- Profile Sidebar -->
+                <VBox spacing="15" styleClass="profile-sidebar" prefWidth="300">
+                    <Label text="Мой профиль" styleClass="title-2"/>
+                    
+                    <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
+                        <Label text="Имя" style="-fx-text-fill: -color-fg-muted; -fx-font-size: 11px;"/>
+                        <Label fx:id="profileNameLabel" styleClass="title-4"/>
+                    </VBox>
+
+                    <Separator/>
+                    
+                    <VBox spacing="5">
+                        <Label text="Email" style="-fx-text-fill: -color-fg-muted; -fx-font-size: 11px;"/>
+                        <Label fx:id="profileEmailLabel" style="-fx-font-size: 14px;"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Телефон" style="-fx-text-fill: -color-fg-muted; -fx-font-size: 11px;"/>
+                        <Label fx:id="profilePhoneLabel" style="-fx-font-size: 14px;"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="Роль" style="-fx-text-fill: -color-fg-muted; -fx-font-size: 11px;"/>
+                        <Label fx:id="profileRoleLabel" styleClass="badge"/>
+                    </VBox>
+                    
+                    <VBox spacing="5">
+                        <Label text="О себе" style="-fx-text-fill: -color-fg-muted; -fx-font-size: 11px;"/>
+                        <Label fx:id="profileBioLabel" wrapText="true" style="-fx-font-style: italic;"/>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button text="Редактировать данные" onAction="#handleEditProfile" maxWidth="Infinity"/>
+                    <Button text="Сменить пароль" onAction="#handleChangePassword" maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- History Content -->
+                <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-padding: 30;">
+                    <Label text="История активности" styleClass="title-3"/>
+                    
+                    <HBox spacing="10">
+                         <TextField fx:id="historySearchField" promptText="Поиск в истории..." HBox.hgrow="ALWAYS"/>
+                         <ComboBox fx:id="historyStatusFilter" promptText="Все статусы" prefWidth="150"/>
+                    </HBox>
+
+                    <TableView fx:id="profileEventsTable" VBox.vgrow="ALWAYS" styleClass="striped">
+                        <columns>
+                            <TableColumn fx:id="profileEventTitleColumn" text="Мероприятие" prefWidth="250"/>
+                            <TableColumn fx:id="profileEventStartDateColumn" text="Дата начала" prefWidth="150"/>
+                            <TableColumn fx:id="profileEventStatusColumn" text="Статус участия" prefWidth="120"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </Tab>
+
+    </TabPane>
+</VBox>

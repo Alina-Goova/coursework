@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.volunteerclient.controller.AdminUsersController"
+      spacing="15" style="-fx-padding: 20;">
+
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <TextField fx:id="userSearchField" promptText="Поиск (Имя, Email)..." HBox.hgrow="ALWAYS"/>
+        
+        <ComboBox fx:id="userRoleFilter" promptText="Роль" prefWidth="150"/>
+        <ComboBox fx:id="userStatusFilter" promptText="Статус" prefWidth="150"/>
+        
+        <Button text="Найти" onAction="#loadUsers" styleClass="accent"/> 
+        <Button fx:id="refreshUsersButton" text="Обновить" onAction="#loadUsers"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Button text="Добавить нового пользователя" onAction="#handleAddUser" styleClass="success"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Управление пользователями системы" style="-fx-text-fill: -color-fg-muted; -fx-font-style: italic;"/>
+    </HBox>
+
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS" styleClass="bordered, striped">
+        <columns>
+            <TableColumn fx:id="userIdColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="userNameColumn" text="Имя" prefWidth="200"/>
+            <TableColumn fx:id="userEmailColumn" text="Email" prefWidth="250"/>
+            <TableColumn fx:id="userRoleColumn" text="Роль" prefWidth="120"/>
+            <TableColumn fx:id="userStatusColumn" text="Статус" prefWidth="120"/>
+            <TableColumn fx:id="userRegDateColumn" text="Дата регистрации" prefWidth="150"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+
+</VBox>

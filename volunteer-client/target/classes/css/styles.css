@@ -1,0 +1,47 @@
+/* Overriding AtlantaFX Primer Light defaults */
+.root {
+    /* Primary Brand Colors */
+    -color-brand-orange: #FFA000;
+    -color-brand-red: #E55137;
+
+    /* Re-map Accent Color (Primary Action Color) */
+    -color-accent-emphasis: -color-brand-red; 
+    -color-accent-fg: white;
+    -color-accent-subtle: derive(-color-brand-red, 90%); 
+    
+    /* Focus ring color */
+    -color-focus-ring: derive(-color-brand-orange, 40%);
+
+    /* Selection color */
+    -color-selection-bg: derive(-color-brand-orange, 60%); 
+}
+
+/* Custom Header Gradient */
+.header-bar {
+    -fx-background-color: linear-gradient(to right, #E55137, #FFA000);
+    -fx-padding: 15;
+}
+
+.header-bar .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+/* TabPane Styling overrides */
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-color: -color-brand-red;
+    -fx-border-width: 0 0 2 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-label {
+    -fx-text-fill: -color-brand-red;
+}
+
+/* Sidebar Styling in Profile */
+.profile-sidebar {
+    -fx-background-color: derive(-color-brand-orange, 95%);
+    -fx-border-color: transparent -color-border-default transparent transparent;
+    -fx-padding: 30;
+}
+
