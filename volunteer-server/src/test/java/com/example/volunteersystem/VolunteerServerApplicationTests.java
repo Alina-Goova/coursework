@@ -1,0 +1,11 @@
+package com.example.volunteersystem;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class VolunteerServerApplicationTests {
+	@Test
+	void contextLoads() {
+	}
+}
